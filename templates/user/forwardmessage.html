@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="/static/jquery-1.8.3.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("#username").change(function(){
+        var userid=$("#username").val();
+        $.ajax({
+            url:"{% url 'checkuser' %}",
+            data:{'uid':userid},
+            success:function(data)
+            {
+                if (data.valid !="exist")
+                {
+                    alert("username not found ");
+                }
+            }
+        })
+    })
+})
+</script>
+<body>
+    <form method="post" action="{% url 'forwardmessageaction'%}">
+        {% csrf_token %}
+    <table>
+        <tr>
+            <th>username</th>
+            <td><input type="text" name="username" id="username"></td>
+        </tr>
+        {% for v in views %}
+        <tr>
+            <th>message</th>
+            <td><input type="text" value="{{v.message}}" name="forwardmessage"></td>
+        </tr>
+        <tr>
+            <th>subject</th>
+            <td><input type="text" value="{{v.subject}}" name="forwardsubject"></td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <th></th>
+            <td><input type="submit" value="send"></td>
+        </tr>
+    </table>
+</form>
+</body>
+{% if messages %}
+{% for msg in messages %}
+<script>
+  alert('{{msg}}')
+</script>
+{% endfor %}
+{% endif %}
+</html>

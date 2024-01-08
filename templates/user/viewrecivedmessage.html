@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="post" action="{% url 'movetotrash' %}">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <th>date</th>
+                <th>time</th>
+                <th>recivername</th>
+                <th>message</th>
+                <th>subject</th>
+                <th>delete</th>
+            </tr>
+            {% for v in viewmessage %}
+            <tr>
+               
+                <td>{{v.date}}</td>
+                <td>{{v.time}}</td>
+                <td>{{v.recivername}}</td>
+                <td>{{v.message}}</td>
+                <td>{{v.subject}}</td>
+                <td><input type="checkbox" name="checkbox" value="{{v.id}}"></td>
+                <td><a href="{% url 'forwardmessage' v.id %}">forward message</a></td>  
+              
+            </tr>
+            {% endfor %}
+            <tr>
+                <td> <input type="submit" value="move to trash"></td>
+            </tr>
+       
+        </table>
+    </form>
+</body>
+</html>

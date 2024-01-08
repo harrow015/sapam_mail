@@ -1,0 +1,117 @@
+<html>
+  <script src="/static/jquery-1.8.3.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $("#country").change(function () {
+        var cid = $("#country").val();
+        $.ajax({
+          url: "{% url 'getstate' %}",
+          data: { co: cid },
+          success: function (data) {
+            $("#state").html(data);
+          },
+        });
+      });
+    });
+  </script>
+  <body>
+    <table>
+      <form method="post" action="{% url 'registeraction' %}">
+        {% csrf_token %}
+        <tr>
+          <th>name</th>
+          <td><input type="text" name="name" /></td>
+        </tr>
+        <tr>
+          <th></th>
+          <td><input type="hidden" name="userid"></td>
+        </tr>
+        <tr>
+          <th>dob</th>
+          <td><input type="date" name="dob" /></td>
+        </tr>
+        <tr>
+          <th>address</th>
+          <td><textarea name="address" cols="10" rows="5"></textarea></td>
+        </tr>
+        <tr>
+          <th>gender</th>
+          <td>
+            <input type="radio" name="gender" value="male" />MALE
+            <input type="radio" name="gender" value="female" />FEMALE
+          </td>
+        </tr>
+        <tr>
+          <th>country</th>
+          <td>
+            <select name="country" id="country">
+              <option value="">---select---</option>
+              {% for country in countries %}
+
+              <option value="{{country.id}}">{{country.country_name}}</option>
+              {% endfor %}
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th>state</th>
+          <td>
+            <select name="state" id="state">
+              <option value="">---select---</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th>hobby</th>
+          {% for hobby in hobbies %}
+          <td>
+            <input
+              type="checkbox"
+              value="{{hobby.id}}"
+              name="hobby"
+            />{{hobby.hobbyname}}
+          </td>
+          {% endfor %}
+        </tr>
+        <tr>
+          <th>phone</th>
+          <td><input type="text" name="phone" /></td>
+        </tr>
+        <tr>
+          <th>username</th>
+          <td><input type="text" name="username" /></td>
+        </tr>
+        <tr>
+          <th>password</th>
+          <td><input type="text" name="password" /></td>
+        </tr>
+        <tr>
+          <th>security question</th>
+          <td>
+            <select name="secuirityquestion">
+              <option value="">---select---</option>
+              <option value=" your pet name">your pet name</option>
+              <option value="favorite food">favorite food</option>
+              <option value="favorite colour">favorite colour</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th>type your answer</th>
+          <td><input type="text" name="answer" /></td>
+        </tr>
+        <tr>
+          <th></th>
+          <td><input type="submit" value="REGISTER" /></td>
+        </tr>
+      </form>
+    </table>
+  </body>
+  {% if messages %}
+  {% for msg in messages %}
+  <script>
+    alert('{{msg}}')
+  </script>
+  {% endfor %}
+  {% endif %}
+</html>

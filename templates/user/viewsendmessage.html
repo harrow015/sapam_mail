@@ -1,0 +1,32 @@
+hii
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        <table>
+            <tr>
+                <th>date</th>
+                <th>time</th>
+                <th>recivername</th>
+                <th>message</th>
+                <th>subject</th>
+                <th>delete</th>
+            </tr>
+            {% for v in viewmessage %}
+            <tr>
+                <td>{{v.date}}</td>
+                <td>{{v.time}}</td>
+                <td>{{v.recivername}}</td>
+                <td>{{v.message}}</td>
+                <td>{{v.subject}}</td>  
+            </tr>
+            {% endfor %}
+        
+        </table>
+    </form>
+</body>
+</html>
